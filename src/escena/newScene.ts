@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import fondo from "../assets/fondo.webp";
+import star from "../assets/star.webp";
 
 export function newScene(): THREE.Scene {
   const scene: THREE.Scene = new THREE.Scene();
-  const texture: THREE.Texture = new THREE.TextureLoader().load(fondo);
+  const texture: THREE.Texture = new THREE.TextureLoader().load(star);
 
   scene.background = texture;
 
