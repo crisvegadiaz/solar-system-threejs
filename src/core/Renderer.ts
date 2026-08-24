@@ -1,10 +1,10 @@
 import * as THREE from "three";
 
-export function newEngine(camera: THREE.PerspectiveCamera) {
+export function newRenderer(camera: THREE.PerspectiveCamera) {
   const canvas: HTMLCanvasElement | null = document.querySelector("#lienzo3d");
 
   if (!canvas) {
-    throw new Error("Canvas element with ID '3d' not found.");
+    throw new Error("Canvas element with ID 'lienzo3d' not found.");
   }
 
   const engine: THREE.WebGLRenderer = new THREE.WebGLRenderer({

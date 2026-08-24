@@ -1,19 +1,7 @@
 import * as THREE from "three";
+import type { Position, Sphere } from "../types/common.ts";
 
-type Sphere = {
-  r: number;
-  sh: number;
-  sv: number;
-  tex: string;
-};
-
-type Position = {
-  x: number;
-  y: number;
-  z: number;
-};
-
-export function newSphere(
+export function planetModel(
   corded: Position,
   planet: Sphere,
   atmosphere?: Sphere,
