@@ -21,7 +21,7 @@ export async function modelLoader(
     const modelo: Object3D = gltf.scene as Object3D;
 
     modelo.position.set(position.x, position.y, position.z);
-    modelo.scale.set(scale, scale, scale);
+    modelo.scale.setScalar(scale)
 
     modelo.traverse((objeto: any) => {
       if (objeto instanceof Mesh) {

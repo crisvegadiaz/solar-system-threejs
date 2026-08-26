@@ -1,19 +1,20 @@
 import * as THREE from "three";
-import type { Position, Sphere } from "../types/common.ts";
+import type { Position } from "../types/common.ts";
 
 export function planetModel(
+  scale: number,
+  tex: string,
   corded: Position,
-  planet: Sphere,
-  atmosphere?: Sphere,
+  atmosTex?: string,
 ): THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial> {
   const sphereShape: THREE.SphereGeometry = new THREE.SphereGeometry(
-    planet.r,
-    planet.sh,
-    planet.sv,
+    0.1,
+    32,
+    32,
   );
 
   const charger: THREE.TextureLoader = new THREE.TextureLoader();
-  const texture: THREE.Texture = charger.load(planet.tex);
+  const texture: THREE.Texture = charger.load(tex);
 
   const sphereMaterial: THREE.MeshStandardMaterial =
     new THREE.MeshStandardMaterial({
@@ -23,13 +24,13 @@ export function planetModel(
   const sphere: THREE.Mesh<THREE.SphereGeometry, THREE.MeshStandardMaterial> =
     new THREE.Mesh(sphereShape, sphereMaterial);
 
-  if (atmosphere) {
+  if (atmosTex) {
     const cloudsShape: THREE.SphereGeometry = new THREE.SphereGeometry(
-      atmosphere.r,
-      atmosphere.sh,
-      atmosphere.sv,
+      0.12,
+      32,
+      32,
     );
-    const cloudsTexture: THREE.Texture = charger.load(atmosphere.tex);
+    const cloudsTexture: THREE.Texture = charger.load(atmosTex);
     const cloudsMaterial: THREE.MeshStandardMaterial =
       new THREE.MeshStandardMaterial({
         map: cloudsTexture,
@@ -49,6 +50,7 @@ export function planetModel(
   sphere.position.set(corded.x, corded.y, corded.z);
 
   sphere.castShadow = true;
+  sphere.scale.setScalar(scale);
 
   return sphere;
 }
