@@ -4,6 +4,8 @@ import { newCamera } from "./core/Camera.ts";
 import { newRenderer } from "./core/Renderer.ts";
 import { modelLoader } from "./utils/ModelLoader.ts";
 import { planetModel } from "./components/PlanetModel.ts";
+import { createPivotModel } from "./utils/createPivotModel.ts";
+import { Planet } from "./types/common.ts";
 
 const star = "/textures/star.webp";
 const sunImg = "/textures/sun.webp";
@@ -19,45 +21,62 @@ const jupiterUrl = "/models/jupiter.glb";
 const saturnUrl = "/models/saturn.glb";
 const marsUrl = "/models/mars.glb";
 
-const scene: THREE.Scene = newScene(star);
-const camera: THREE.PerspectiveCamera = newCamera();
-const engine: THREE.WebGLRenderer = newRenderer(camera);
+const scene = newScene(star);
+const camera = newCamera();
+const engine = newRenderer(camera);
 
-const sun = planetModel(15, sunImg, { x: 0, y: 0, z: 0 });
-const mercury = planetModel(2, mercuryImg, { x: 3, y: 0, z: 0 });
-const venus = planetModel(4, venusImg, { x: 6, y: 0, z: 0 });
-const earth = planetModel(4, earthImg, { x: 9, y: 0, z: 0 }, cloudsImg);
-const moon = planetModel(0.3, moonImg, { x: 0.4, y: 0, z: 0 });
-const mars = await modelLoader(0.5, marsUrl, { x: 12, y: 0, z: 0 });
-const jupiter = await modelLoader(1, jupiterUrl, { x: 20, y: 0, z: 0 });
-const saturn = await modelLoader(2.5, saturnUrl, { x: 30, y: 0, z: 0 });
-const uranus = planetModel(8, uranusImg, { x: 40, y: 0, z: 0 });
-const neptune = planetModel(7, neptuneImg, { x: 50, y: 0, z: 0 });
-const pluto = planetModel(1, plutoImg, { x: 60, y: 0, z: 0 });
+const sunData = new Planet({ texture: sunImg, scale: 15 });
+const sun = planetModel(sunData);
 
-const earthPivot = new THREE.Object3D();
-earthPivot.position.set(0, 0, 0);
-earthPivot.add(earth);
+const mercuryData = new Planet({ texture: mercuryImg, scale: 3, x: 4 });
+const mercuryPivot = createPivotModel(planetModel(mercuryData));
 
-const moonPivot = new THREE.Object3D();
-moonPivot.position.set(0, 0, 0);
-moonPivot.add(moon);
-earth.add(moonPivot);
+const venusData = new Planet({ texture: venusImg, scale: 4, x: 6 });
+const venusPivot = createPivotModel(planetModel(venusData));
+
+const earthData = new Planet(
+  { texture: earthImg, scale: 4, x: 9 },
+  { texture: cloudsImg, r: 0.11 },
+);
+const earthPivot = createPivotModel(planetModel(earthData));
+
+const moonData = new Planet({ texture: moonImg, scale: 0.3, x: 0.4 });
+const moonPivot = createPivotModel(planetModel(moonData));
+
+const marsData = new Planet({ texture: marsUrl, scale: 0.5, x: 12 });
+const marsPivot = createPivotModel(await modelLoader(marsData));
+
+const jupiterData = new Planet({ texture: jupiterUrl, scale: 1, x: 18 });
+const jupiterPivot = createPivotModel(await modelLoader(jupiterData));
+
+const saturnData = new Planet({ texture: saturnUrl, scale: 2.5, x: 25 });
+const saturnPivot = createPivotModel(await modelLoader(saturnData));
+
+const uranusData = new Planet({ texture: uranusImg, scale: 8, x: 32 });
+const uranusPivot = createPivotModel(planetModel(uranusData));
+
+const neptuneData = new Planet({ texture: neptuneImg, scale: 7, x: 38 });
+const neptunePivot = createPivotModel(planetModel(neptuneData));
+
+const plutoData = new Planet({ texture: plutoImg, scale: 1, x: 42 });
+const plutoPivot = createPivotModel(planetModel(plutoData));
+
+earthPivot.children[0].add(moonPivot);
 
 scene.add(
   sun,
-  mercury,
-  venus,
+  mercuryPivot,
+  venusPivot,
   earthPivot,
-  mars,
-  saturn,
-  jupiter,
-  uranus,
-  neptune,
-  pluto,
+  marsPivot,
+  jupiterPivot,
+  saturnPivot,
+  uranusPivot,
+  neptunePivot,
+  plutoPivot,
 );
 
-const light: THREE.PointLight = new THREE.PointLight(0xffffff, 18, 0, 2);
+const light: THREE.PointLight = new THREE.PointLight(0xffffff, 1000, 0, 2);
 light.position.set(0, 0, 0);
 sun.add(light);
 
@@ -68,18 +87,35 @@ if (sunMat) {
   sunMat.emissiveIntensity = 2;
 }
 
-camera.position.set(0, 50, 0);
+//camera.position.set(0, 40, 0);
 camera.lookAt(sun.position);
 
-function actualizar(): void {
-  requestAnimationFrame(actualizar);
+function update(): void {
+  requestAnimationFrame(update);
 
   sun.rotation.y += 0.0015;
-  earth.rotation.y += 0.0015;
-  moonPivot.rotation.y += 0.0095;
-  earthPivot.rotation.y += 0.0055;
+  mercuryPivot.children[0].rotation.y += 0.0015;
+  venusPivot.children[0].rotation.y += 0.0015;
+  earthPivot.children[0].rotation.y += 0.0015;
+  marsPivot.children[0].rotation.y += 0.0015;
+  jupiterPivot.children[0].rotation.y += 0.0015;
+  saturnPivot.children[0].rotation.y += 0.0015;
+  uranusPivot.children[0].rotation.y += 0.0015;
+  neptunePivot.children[0].rotation.y += 0.0015;
+  plutoPivot.children[0].rotation.y += 0.0015;
 
-  const cloud: THREE.Object3D | undefined = earth.children[0];
+  mercuryPivot.rotation.y += 0.02;
+  venusPivot.rotation.y += 0.015;
+  earthPivot.rotation.y += 0.01;
+  moonPivot.rotation.y += 0.0095;
+  marsPivot.rotation.y += 0.008;
+  jupiterPivot.rotation.y += 0.004;
+  saturnPivot.rotation.y += 0.002;
+  uranusPivot.rotation.y += 0.001;
+  neptunePivot.rotation.y += 0.0008;
+  plutoPivot.rotation.y += 0.0005;
+
+  const cloud: THREE.Object3D | undefined = earthPivot.children[0].children[0];
   if (cloud) {
     cloud.rotation.y += 0.0008;
   }
@@ -87,4 +123,4 @@ function actualizar(): void {
   engine.render(scene, camera);
 }
 
-actualizar();
+update();

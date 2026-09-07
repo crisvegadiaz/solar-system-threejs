@@ -1,10 +1,12 @@
 import * as THREE from "three";
 
-export function newRenderer(camera: THREE.PerspectiveCamera) {
-  const canvas: HTMLCanvasElement | null = document.querySelector("#lienzo3d");
+export function newRenderer(
+  camera: THREE.PerspectiveCamera,
+): THREE.WebGLRenderer {
+  const canvas: HTMLCanvasElement | null = document.querySelector("#canvas3d");
 
   if (!canvas) {
-    throw new Error("Canvas element with ID 'lienzo3d' not found.");
+    throw new Error("Canvas element with ID 'canvas3d' not found.");
   }
 
   const engine: THREE.WebGLRenderer = new THREE.WebGLRenderer({
@@ -15,7 +17,7 @@ export function newRenderer(camera: THREE.PerspectiveCamera) {
   engine.setSize(window.innerWidth, window.innerHeight);
   engine.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  window.addEventListener("resize", () => {
+  window.addEventListener("resize", (): void => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 

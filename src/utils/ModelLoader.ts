@@ -1,36 +1,45 @@
 import { Mesh, Object3D } from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import type { Planet } from "../types/common";
 import type { GLTF } from "three/addons/loaders/GLTFLoader.js";
-import type { Position } from "../types/common.ts";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
-export async function modelLoader(
-  scale: number,
-  model: string,
-  position: Position,
-): Promise<Object3D> {
-  const cargador = new GLTFLoader();
+/**
+ * Load a GLTF model for a Planet and apply basic transforms/shadow settings.
+ * Validates required options and applies sensible defaults for position/scale.
+ */
+export async function modelLoader(obj: Planet): Promise<Object3D> {
+  const { options } = obj;
+  const { texture, x = 0, y = 0, z = 0, scale = 1 } = options ?? {};
+
+  if (!texture) {
+    throw new Error("options.texture is required to load a model.");
+  }
+
+  const loader = new GLTFLoader();
+
+  const handleProgress = (event: ProgressEvent): void => {
+    if (event.total && event.total > 0) {
+      const percentage = (event.loaded / event.total) * 100;
+      console.log(`Loading model: ${percentage.toFixed(1)}%`);
+    }
+  };
 
   try {
-    const gltf: GLTF = await cargador.loadAsync(model, (progreso: ProgressEvent) => {
-      if (progreso.total > 0) {
-        const porcentaje = (progreso.loaded / progreso.total) * 100;
-        console.log(`Cargando modelo: ${porcentaje.toFixed(1)}%`);
+    const gltf: GLTF = await loader.loadAsync(texture, handleProgress);
+
+    const model: Object3D = gltf.scene;
+
+    model.position.set(x, y, z);
+    model.scale.setScalar(scale);
+
+    model.traverse((node: Object3D): void => {
+      if (node instanceof Mesh) {
+        node.castShadow = true;
+        node.receiveShadow = true;
       }
     });
 
-    const modelo: Object3D = gltf.scene as Object3D;
-
-    modelo.position.set(position.x, position.y, position.z);
-    modelo.scale.setScalar(scale)
-
-    modelo.traverse((objeto: any) => {
-      if (objeto instanceof Mesh) {
-        objeto.castShadow = true;
-        objeto.receiveShadow = true;
-      }
-    });
-
-    return modelo;
+    return model;
   } catch (error) {
     console.error("Error loading model:", error);
     throw error;
