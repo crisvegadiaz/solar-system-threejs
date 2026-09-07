@@ -1,11 +1,13 @@
 import * as THREE from "three";
+import { Planet } from "./types/common.ts";
 import { newScene } from "./core/Scene.ts";
 import { newCamera } from "./core/Camera.ts";
 import { newRenderer } from "./core/Renderer.ts";
 import { modelLoader } from "./utils/ModelLoader.ts";
 import { planetModel } from "./components/PlanetModel.ts";
 import { createPivotModel } from "./utils/createPivotModel.ts";
-import { Planet } from "./types/common.ts";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { addOrbit } from "./utils/addOrbit.ts";
 
 const star = "/textures/star.webp";
 const sunImg = "/textures/sun.webp";
@@ -24,6 +26,16 @@ const marsUrl = "/models/mars.glb";
 const scene = newScene(star);
 const camera = newCamera();
 const engine = newRenderer(camera);
+
+// OrbitControls: permite moverse libremente por la escena
+const controls = new OrbitControls(camera, engine.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.screenSpacePanning = false;
+controls.minDistance = 1;
+controls.maxDistance = 300;
+controls.target.set(0, 0, 0);
+controls.update();
 
 const sunData = new Planet({ texture: sunImg, scale: 15 });
 const sun = planetModel(sunData);
@@ -76,6 +88,16 @@ scene.add(
   plutoPivot,
 );
 
+addOrbit(scene, mercuryPivot);
+addOrbit(scene, venusPivot);
+addOrbit(scene, earthPivot);
+addOrbit(scene, marsPivot);
+addOrbit(scene, jupiterPivot);
+addOrbit(scene, saturnPivot);
+addOrbit(scene, uranusPivot);
+addOrbit(scene, neptunePivot);
+addOrbit(scene, plutoPivot);
+
 const light: THREE.PointLight = new THREE.PointLight(0xffffff, 1000, 0, 2);
 light.position.set(0, 0, 0);
 sun.add(light);
@@ -87,7 +109,7 @@ if (sunMat) {
   sunMat.emissiveIntensity = 2;
 }
 
-//camera.position.set(0, 40, 0);
+camera.position.set(0, 40, 0);
 camera.lookAt(sun.position);
 
 function update(): void {
@@ -119,6 +141,9 @@ function update(): void {
   if (cloud) {
     cloud.rotation.y += 0.0008;
   }
+
+  // update orbit controls (required if enableDamping = true)
+  controls.update();
 
   engine.render(scene, camera);
 }
