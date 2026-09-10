@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 export function addOrbit(
-  scene: THREE.Scene,
+  target: THREE.Object3D,
   pivot: THREE.Object3D,
   color: number = 0xffffff,
   segments: number = 128,
@@ -29,5 +29,5 @@ export function addOrbit(
   });
   const orbitLine = new THREE.LineLoop(geometry, material);
 
-  scene.add(orbitLine);
+  target.add(orbitLine);
 }

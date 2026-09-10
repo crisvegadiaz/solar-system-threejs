@@ -1,0 +1,71 @@
+[
+  {
+    "name": "sun",
+    "scale": 15
+  },
+  {
+    "name": "mercury",
+    "scale": 3,
+    "x": 4,
+    "speed": 0.004
+  },
+  {
+    "name": "venus",
+    "scale": 4,
+    "x": 6,
+    "speed": 0.0025
+  },
+  {
+    "name": "earth",
+    "scale": 4,
+    "x": 9,
+    "speed": 0.0015,
+    "clouds": {
+      "name": "clouds",
+      "r": 0.11
+    }
+  },
+  {
+    "name": "moon",
+    "parent": "earth",
+    "scale": 0.5,
+    "x": 0.8,
+    "speed": 0.006
+  },
+  {
+    "name": "mars",
+    "scale": 0.5,
+    "x": 12,
+    "speed": 0.0008
+  },
+  {
+    "name": "jupiter",
+    "scale": 1,
+    "x": 18,
+    "speed": 0.0004
+  },
+  {
+    "name": "saturn",
+    "scale": 2.5,
+    "x": 25,
+    "speed": 0.00025
+  },
+  {
+    "name": "uranus",
+    "scale": 8,
+    "x": 32,
+    "speed": 0.00015
+  },
+  {
+    "name": "neptune",
+    "scale": 7,
+    "x": 38,
+    "speed": 0.0001
+  },
+  {
+    "name": "pluto",
+    "scale": 1,
+    "x": 42,
+    "speed": 0.00007
+  }
+]
