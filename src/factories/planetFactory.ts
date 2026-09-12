@@ -41,6 +41,7 @@ function createSphereModel(texturePath: string, config: PlanetConfig): THREE.Mes
   sphere.castShadow = true;
   sphere.receiveShadow = true;
   sphere.name = config.name;
+  sphere.userData.planetName = config.name;
 
   return sphere;
 }
@@ -74,11 +75,13 @@ async function loadGltfModel(modelPath: string, config: PlanetConfig): Promise<T
   model.position.set(config.x ?? 0, config.y ?? 0, config.z ?? 0);
   model.scale.setScalar(config.scale ?? 1);
   model.name = config.name;
+  model.userData.planetName = config.name;
 
   model.traverse((node: THREE.Object3D): void => {
     if (node instanceof THREE.Mesh) {
       node.castShadow = true;
       node.receiveShadow = true;
+      node.userData.planetName = config.name;
     }
   });
 

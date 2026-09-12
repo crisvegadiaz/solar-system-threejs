@@ -28,6 +28,14 @@ export async function createSolarSystem(scene: THREE.Scene): Promise<SolarSystem
   const satellites: CelestialItem[] = [];
   const meshesMap = new Map<string, THREE.Object3D>();
   const pivotsMap = new Map<string, THREE.Object3D>();
+  const infoMap = new Map<string, PlanetConfig>();
+
+  planetsConfig.forEach((config) => {
+    infoMap.set(config.name, config);
+  });
+
+  const getPlanetByName = (name: string): THREE.Object3D | undefined => meshesMap.get(name);
+  const getPlanetInfoByName = (name: string): PlanetConfig | undefined => infoMap.get(name);
 
   items.forEach((item) => {
     meshesMap.set(item.config.name, item.mesh);
@@ -110,6 +118,8 @@ export async function createSolarSystem(scene: THREE.Scene): Promise<SolarSystem
   return {
     sun: sunModel,
     update,
+    getPlanetByName,
+    getPlanetInfoByName,
   };
 }
 

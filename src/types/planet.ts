@@ -24,6 +24,8 @@ export interface PlanetConfig extends Position3D, SphereGeometryOptions {
   parent?: string;
   speed?: number;
   clouds?: AtmosphereConfig;
+  description?: string;
+  facts?: string[];
 }
 
 export type PlanetMesh = THREE.Mesh<
@@ -34,4 +36,6 @@ export type PlanetMesh = THREE.Mesh<
 export interface SolarSystem {
   sun: THREE.Object3D;
   update: () => void;
+  getPlanetByName: (name: string) => THREE.Object3D | undefined;
+  getPlanetInfoByName: (name: string) => PlanetConfig | undefined;
 }

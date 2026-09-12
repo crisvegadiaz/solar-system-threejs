@@ -1,25 +1,50 @@
 [
   {
     "name": "sun",
-    "scale": 15
+    "scale": 15,
+    "description": "La estrella central del sistema solar, una gigantesca esfera de plasma que aporta la energía que mantiene la vida en la Tierra.",
+    "facts": [
+      "Representa alrededor del 99.8% de la masa total del sistema solar.",
+      "Su temperatura superficial supera los 5.500 °C.",
+      "La luz del Sol tarda unos 8 minutos en llegar a la Tierra."
+    ]
   },
   {
     "name": "mercury",
     "scale": 3,
     "x": 4,
-    "speed": 0.004
+    "speed": 0.004,
+    "description": "El planeta más cercano al Sol, con paisajes rocosos y una superficie muy similar a la Luna.",
+    "facts": [
+      "Un año en Mercurio dura solo 88 días terrestres.",
+      "Tiene una temperatura que cambia mucho entre el día y la noche.",
+      "No tiene lunas naturales importantes."
+    ]
   },
   {
     "name": "venus",
     "scale": 4,
     "x": 6,
-    "speed": 0.0025
+    "speed": 0.0025,
+    "description": "Un mundo cubierto por densas nubes de dióxido de carbono y una presión atmosférica brutal.",
+    "facts": [
+      "Su temperatura superficial puede superar los 460 °C.",
+      "Gira en sentido retrógrado, al revés que la mayoría de los planetas.",
+      "Es el planeta más brillante visto desde la Tierra."
+    ]
   },
   {
     "name": "earth",
     "scale": 4,
     "x": 9,
     "speed": 0.0015,
+    "description": "Nuestro hogar, el único planeta conocido con vida y océanos líquidos en la superficie.",
+    "facts": [
+      "El 71% de su superficie está cubierta por agua.",
+      "Tiene una atmósfera que protege de la radiación solar.",
+      "La Luna ayuda a estabilizar su eje de rotación.",
+      "Tiene una sola luna natural."
+    ],
     "clouds": {
       "name": "clouds",
       "r": 0.11
@@ -30,42 +55,84 @@
     "parent": "earth",
     "scale": 0.5,
     "x": 0.8,
-    "speed": 0.006
+    "speed": 0.006,
+    "description": "El satélite natural de la Tierra, responsable de las mareas y de un cielo nocturno muy familiar.",
+    "facts": [
+      "La Luna siempre muestra la misma cara a la Tierra.",
+      "Su gravedad provoca las mareas oceánicas.",
+      "Se formó probablemente tras un gran impacto temprano en la historia terrestre."
+    ]
   },
   {
     "name": "mars",
     "scale": 0.5,
     "x": 12,
-    "speed": 0.0008
+    "speed": 0.0008,
+    "description": "Un planeta rojo con cañones, volcanes enormes y evidencia de agua líquida en el pasado.",
+    "facts": [
+      "Tiene el volcán más alto del sistema solar: Olympus Mons.",
+      "Se conocen tormentas de polvo que pueden cubrir todo el planeta.",
+      "Es un gran objetivo para futuras misiones humanas."
+    ]
   },
   {
     "name": "jupiter",
     "scale": 1,
     "x": 18,
-    "speed": 0.0004
+    "speed": 0.0004,
+    "description": "El gigante gaseoso del sistema solar, con una atmósfera de bandas y tormentas colosales.",
+    "facts": [
+      "La Gran Mancha Roja es una tormenta que lleva siglos activa.",
+      "Tiene una gran cantidad de lunas, incluidas Europa y Ganímedes.",
+      "Es el planeta más grande del sistema solar."
+    ]
   },
   {
     "name": "saturn",
     "scale": 2.5,
     "x": 25,
-    "speed": 0.00025
+    "speed": 0.00025,
+    "description": "Conocido por sus impresionantes anillos, formados por hielo, roca y polvo orbitando alrededor del planeta.",
+    "facts": [
+      "Sus anillos se extienden a gran distancia, pero son muy delgados.",
+      "Es menos denso que el agua.",
+      "Tiene más de 80 lunas confirmadas."
+    ]
   },
   {
     "name": "uranus",
     "scale": 8,
     "x": 32,
-    "speed": 0.00015
+    "speed": 0.00015,
+    "description": "Un gigante helado que gira casi tumbado sobre su lado, con un color azul verdoso distintivo.",
+    "facts": [
+      "Su eje está inclinado unos 98 grados.",
+      "Tiene un color azulado por la presencia de metano en la atmósfera.",
+      "Es un planeta muy frío y poco visible a simple vista."
+    ]
   },
   {
     "name": "neptune",
     "scale": 7,
     "x": 38,
-    "speed": 0.0001
+    "speed": 0.0001,
+    "description": "El planeta más lejano del Sol, un gigante de hielo con vientos extremadamente rápidos.",
+    "facts": [
+      "Sus vientos pueden superar los 2.000 km/h.",
+      "Tiene una intensa tonalidad azul por el metano atmosférico.",
+      "Fue descubierto por predicción matemática antes de ser visto."
+    ]
   },
   {
     "name": "pluto",
     "scale": 1,
     "x": 42,
-    "speed": 0.00007
+    "speed": 0.00007,
+    "description": "Un mundo helado del cinturón de Kuiper, famoso por ser un planeta enano y por su compleja geología.",
+    "facts": [
+      "Tiene una órbita muy excéntrica y muy inclinada.",
+      "Su principal satélite es Caronte.",
+      "La NASA envió la sonda New Horizons para estudiarlo."
+    ]
   }
 ]
